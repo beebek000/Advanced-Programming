@@ -28,6 +28,17 @@ public class TopicServlet extends HttpServlet {
             }
             req.getRequestDispatcher(("pages/topicList.jsp")).forward(req,resp);
         }
+        if("edit".equals(action)){
+            try{
+                int id = Integer.parseInt(req.getParameter("id"));
+                Topic topicData = TopicDAO.fetchTopicById(id);
+                req.setAttribute("topicData", topicData);
+            }catch (Exception e){
+                req.setAttribute("error", "Something went wrong" + e.getMessage());
+            }
+            req.getRequestDispatcher("pages/editTopic.jsp").forward(req,resp);
+        }
+
         req.getRequestDispatcher("pages/addTopic.jsp").forward(req,resp);
 
     }
@@ -48,7 +59,7 @@ public class TopicServlet extends HttpServlet {
             try{
                 boolean result = TopicDAO.insertTopic(topicObj);
                 if(result==true){
-                    resp.sendRedirect("/view-topics");
+                    resp.sendRedirect("/topic?page=list");
                 }else{
 
                 }

@@ -25,7 +25,6 @@ public class UserDAO {
             } else {
                 return false;
             }
-
         }
     }
 
